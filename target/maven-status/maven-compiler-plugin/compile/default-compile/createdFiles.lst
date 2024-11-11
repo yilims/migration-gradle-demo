@@ -1,0 +1,4 @@
+com\example\demo\DemoApplication.class
+com\example\demo\rabbitmq\MessageListener.class
+com\example\demo\rabbitmq\SpringRabbitConfigs.class
+com\example\demo\rabbitmq\MessageController.class
