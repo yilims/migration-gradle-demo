@@ -6,6 +6,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class MessageListener {
 
+	private final AmqpTemplate amqpTemplate;
+
+	@Autowired
+	public MessageListener(AmqpTemplate amqpTemplate) {
+		this.amqpTemplate = amqpTemplate;
+	}
+
 	/**
 	 * Assigns a Consumer to receive the messages whenever there is one.
 	 * @param message
@@ -13,7 +20,7 @@ public class MessageListener {
 	@RabbitListener(queues = "queue.excur")
 	public void receiveMessage(String message) {
 		System.out.println("Received Message:" + message);
-		System.out.println();
+		amqpTemplate.convertAndSend("queue-test", "Sample message using amqp template");
 	}
 
 }
