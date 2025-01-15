@@ -28,4 +28,10 @@ public class SpringRabbitConfigs {
 	public Binding queueBinding() {
 		return new Binding(QUEUE_NAME, Binding.DestinationType.QUEUE, EXCHANGE_NAME, "", null);
 	}
+
+	public void convertAndSend(){
+		// This is a dummy method to demonstrate the usage of AmqpTemplate.
+		// In a real project, you may need to inject AmqpTemplate and use it.
+		// amqpTemplate.convertAndSend("queue-test", "Sample message using amqp template");
+	}
 }
