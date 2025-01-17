@@ -30,8 +30,5 @@ public class SpringRabbitConfigs {
 	}
 
 	public void convertAndSend(){
-		// This is a dummy method to demonstrate the usage of AmqpTemplate.
-		// In a real project, you may need to inject AmqpTemplate and use it.
-		// amqpTemplate.convertAndSend("queue-test", "Sample message using amqp template");
 	}
 }
