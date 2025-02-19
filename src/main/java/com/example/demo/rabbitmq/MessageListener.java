@@ -1,28 +1,30 @@
 package com.example.demo.rabbitmq;
 
-import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import com.azure.spring.messaging.implementation.annotation.EnableAzureMessaging;
+import com.azure.spring.messaging.servicebus.implementation.core.annotation.ServiceBusListener;
+import com.azure.spring.messaging.servicebus.core.ServiceBusTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@EnableAzureMessaging
 public class MessageListener {
 
-	private final AmqpTemplate amqpTemplate;
+	private final ServiceBusTemplate serviceBusTemplate;
 
 	@Autowired
-	public MessageListener(AmqpTemplate amqpTemplate) {
-		this.amqpTemplate = amqpTemplate;
+	public MessageListener(ServiceBusTemplate serviceBusTemplate) {
+		this.serviceBusTemplate = serviceBusTemplate;
 	}
 
 	/**
 	 * Assigns a Consumer to receive the messages whenever there is one.
 	 * @param message
 	 */
-	@RabbitListener(queues = "queue.excur")
+	@ServiceBusListener(destination = "queue.excur")
 	public void receiveMessage(String message) {
 		System.out.println("Received Message:" + message);
-		amqpTemplate.convertAndSend("queue-test", "Sample message using amqp template");
+		serviceBusTemplate.send("queue-test", org.springframework.messaging.support.MessageBuilder.withPayload("Sample message using service bus template").build());
 	}
 
 }
