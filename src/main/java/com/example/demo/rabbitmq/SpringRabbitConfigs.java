@@ -6,27 +6,27 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SpringRabbitConfigs {
-
-	private static final String EXCHANGE_NAME = "fanout.ex";
-
-	private static final String QUEUE_NAME = "queue.ex";
+    @Value("${rabbitmq.queue.name}")
+    private String queue;
+    @Value("${rabbitmq.exchange.name}")
+    private String exchange;
 
 	@Bean
 	public Queue createQueue() {
 		// For learning purpose - durable=false,
 		// in a real project you may need to set this as true.
-		return new Queue(QUEUE_NAME, true);
+		return new Queue(queue, true);
 	}
 
 	@Bean
 	public Exchange fanoutExchange() {
 		// durable=true, autoDelete=false
-		return new FanoutExchange(EXCHANGE_NAME, true, false);
+		return new FanoutExchange(exchange, true, false);
 	}
 
 	@Bean
 	public Binding queueBinding() {
-		return new Binding(QUEUE_NAME, Binding.DestinationType.QUEUE, EXCHANGE_NAME, "", null);
+		return new Binding(queue, Binding.DestinationType.QUEUE, EXCHANGE_NAME, "", null);
 	}
 
 	public void convertAndSend(){
