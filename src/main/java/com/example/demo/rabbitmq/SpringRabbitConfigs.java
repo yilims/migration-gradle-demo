@@ -25,7 +25,7 @@ public class SpringRabbitConfigs {
 
 	@Bean
 	public Binding queueBinding(){
-		return BindingBuilder.bind(this.createQueue).to(this.exchange).with("test.key").noargs();
+		return BindingBuilder.bind(createQueue()).to(exchange()).with("test.key").noargs();
 	}
 	
 
