@@ -28,7 +28,7 @@ public class SpringRabbitConfigs {
 
 	@Bean
 	public Binding queueBinding() {
-		return new Binding(queue, Binding.DestinationType.QUEUE, EXCHANGE_NAME, "", null);
+		return new Binding(queue, Binding.DestinationType.QUEUE, exchange, "", null);
 	}
 
     @Bean
