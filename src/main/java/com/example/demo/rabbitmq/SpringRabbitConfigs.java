@@ -15,21 +15,19 @@ public class SpringRabbitConfigs {
 
 	@Bean
 	public Queue createQueue() {
-		// For learning purpose - durable=false,
-		// in a real project you may need to set this as true.
-		return new Queue(queue, true);
+		return QueueBuilder.durable(queue).build();
 	}
 
 	@Bean
-	public Exchange fanoutExchange() {
-		// durable=true, autoDelete=false
-		return new FanoutExchange(exchange, true, false);
+	public DirectExchange exchange(){
+		return new DirectExchange(exchange);
 	}
 
 	@Bean
-	public Binding queueBinding() {
-		return new Binding(queue, Binding.DestinationType.QUEUE, exchange, "", null);
+	public Binding queueBinding(){
+		return BindingBuilder.bind(this.createQueue).to(this.exchange).with("test.key").noargs();
 	}
+	
 
     @Bean
     public ConnectionFactory connectionFactory(){
