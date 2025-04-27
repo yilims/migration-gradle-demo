@@ -19,7 +19,7 @@ public class MessageListener {
 	 * Assigns a Consumer to receive the messages whenever there is one.
 	 * @param message
 	 */
-	@RabbitListener(queues = "queue.excur")
+	@RabbitListener(queues = "${rabbitmq.queue.name}")
 	public void receiveMessage(String message) {
 		System.out.println("Received Message:" + message);
 		amqpTemplate.convertAndSend("queue-test", "Sample message using amqp template");
