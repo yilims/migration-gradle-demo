@@ -13,21 +13,27 @@ public class SpringRabbitConfigs {
     @Value("${rabbitmq.exchange.name}")
     private String exchange;
 
-	@Bean
-	public Queue createQueue() {
-		return QueueBuilder.durable(queue).build();
-	}
+    /**
+    * @Author: yzd
+    * @Date: 2024/1/13
+     * 创建交换机
+    */
+    @Bean("redPacketExchange")
+    public CustomExchange redPacketExchange(){
+        Map<String, Object> arguments = new HashMap<>();
+        arguments.put("x-delayed-type", "direct");
+        return new CustomExchange("redPacketExchange","x-delayed-message",true,false,arguments);
+    }
 
-	@Bean
-	public DirectExchange exchange(){
-		return new DirectExchange(exchange);
-	}
+    @Bean("redPacketQueue")
+    public Queue redPacketQueue(){
+        return QueueBuilder.durable("redPacketQueue").build();
+    }
 
-	@Bean
-	public Binding queueBinding(){
-		return BindingBuilder.bind(createQueue()).to(exchange()).with("test.key").noargs();
-	}
-	
+    @Bean
+    public Binding redPacketBinding(){
+        return BindingBuilder.bind(redPacketQueue()).to(redPacketExchange()).with("red.packet.key").noargs();
+    }
 
     @Bean
     public ConnectionFactory connectionFactory(){
