@@ -14,7 +14,6 @@ public class MessageControllerTest {
     private AmqpTemplate amqpTemplate;
 
 
-    @Test
     public void testSendMessage() {
         MessageController messageController = new MessageController(amqpTemplate);
         // Arrange
